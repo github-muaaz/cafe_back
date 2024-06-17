@@ -3,7 +3,7 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/cafe
+    url: jdbc:postgresql://localhost:5432/cafe_db
     username: postgres
     password: adminPassword
 

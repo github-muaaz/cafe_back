@@ -1,0 +1,42 @@
+server:
+  port: 8090
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/cafe
+    username: postgres
+    password: 111
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        enable_lazy_load_no_trans: true
+  servlet:
+    multipart:
+      max-request-size: 100MB
+      max-file-size: 5MB
+
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+jwt:
+  access:
+    key: 7#70OZn0#Dsaodi98BK8C1%T&hBnrzgqK28o
+    expiration-time: 7200000000
+  refresh:
+    key: 7787dsa8dp7#%70OZ()BK8C1%Taskldjksal***
+    expiration-time: 60480000000
+
+app:
+  admin:
+    email: admin@gmail.com
+    password: adminPassword
+
+# spring_profiles_active=prod
+# PROD_DB_HOST=viaduct.proxy.rlwy.net
+# PROD_DB_PORT=23014
+# PROD_DB_NAME=railway
+# PROD_DB_PASSWORD=NKHihccIfPGGLIkVDCeFXpkILVLkJUWU
+# PROD_DB_USERNAME=postgres

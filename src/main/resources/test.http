@@ -1,0 +1,71 @@
+### sign in
+POST http://localhost:8090/api/v1/auth/sign-in
+Content-Type: application/json
+
+{
+  "email": "admin@gmail.com",
+  "password": "adminPassword"
+}
+
+### refresh token
+GET http://localhost:8090/api/v1/auth/refresh-token
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyZWU3NTU1ZC0zNGI0LTQ5OTMtZGU5N2U0MjUtMDQ4ZC00MDYwLWJhMDgtMjdhZTFmYWM5YTJmLTliYTktMTRhZTYwZmI5ODBkIiwiaWF0IjoxNzEzODQ1MzgxLCJleHAiOjE3MjEwNDUzODF9.9LdRbCKLECNAUpCH_roOOeeSkiJNoBCTjhsNzMbrVEI
+RefreshToken: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJkZTk3ZTQyNS0wNDhkLTQwNjAtYmEwOC0yN2FlMWZhYzlhMmYiLCJpYXQiOjE3MTM4NDUzODEsImV4cCI6MTcxNDQ1MDE4MX0.t1Iz-4OyJI7ymIqAV5j5UNv2m6ZWxO-r9sVAGgPxN_fGdGkNFaqpTveM205MWMSNPWjSvmljSSqreZTRDhvb8g
+
+### add user
+POST http://localhost:8090/api/v1/auth/sign-up
+Content-Type: application/json
+
+{
+  "firstname": "muaaz",
+  "lastname": "+99899",
+  "email": "muaaz@gmail.com",
+  "password": "Root_31",
+  "roleId": "ff76caab-26ab-4bd0-a920-78408d1a6544"
+}
+
+### user me
+GET http://localhost:8090/api/v1/user/me
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyZWU3NTU1ZC0zNGI0LTQ5OTMtZGU5N2U0MjUtMDQ4ZC00MDYwLWJhMDgtMjdhZTFmYWM5YTJmLTliYTktMTRhZTYwZmI5ODBkIiwiaWF0IjoxNzEzODQ1MzgxLCJleHAiOjE3MjEwNDUzODF9.9LdRbCKLECNAUpCH_roOOeeSkiJNoBCTjhsNzMbrVEI
+
+### logout
+GET http://localhost:8090/api/v1/user/logout
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyZWU3NTU1ZC0zNGI0LTQ5OTMtZGU5N2U0MjUtMDQ4ZC00MDYwLWJhMDgtMjdhZTFmYWM5YTJmLTliYTktMTRhZTYwZmI5ODBkIiwiaWF0IjoxNzEzODQ1MzgxLCJleHAiOjE3MjEwNDUzODF9.9LdRbCKLECNAUpCH_roOOeeSkiJNoBCTjhsNzMbrVEI
+
+### languages
+POST http://localhost:8090/api/v1/orders
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4YTA1NjJlMS1jZGFiLTQ0NTEtNWJmZjk0MzUtYmQ1My00NGI4LWEzYzQtODQ2ODY0MTlmMzc1LWI2YTQtMzJmNWJkN2JiNmMwIiwiaWF0IjoxNzE1NDM0ODE5LCJleHAiOjE3MjI2MzQ4MTl9.dyx9-ebpuD0p3C90cJA53CjPNPbL4fofMI2JqtlOK2I
+
+### language key value
+GET http://localhost:8090/api/v1/language/value/uzb
+
+### language key add
+POST http://localhost:8090/api/v1/language/key
+Content-Type: application/json
+
+[
+  {"key":  "add"},
+  {"key":  "old"}
+]
+
+### set language key value
+POST http://localhost:8090/api/v1/language/value
+Content-Type: application/json
+
+[
+  {
+    "id": "2c9d1f6c-3c6e-45db-a294-3281d9556698",
+    "languageId": "a1f4d98c-f3bc-4d65-8dba-3ff1b51a803f",
+    "languageKeyId": "a202d85c-f15d-4fda-9b76-4613a46ee358",
+    "value": "qo'shish (ruscha)"
+  }
+]
+
+###
+GET http://localhost:8090/api/v1/category/query/20?search=o
+#Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJmMTY2MDExMS1jZDczLTQ2N2QtNzljMmMxYjMtMjFiMS00ZGU0LWIyN2QtYTBhNzVkNDJhNGMyLTk1MGYtODQzYTllNmVkNWZlIiwiaWF0IjoxNzA4Mjc0MDY4LCJleHAiOjE3MTU0NzQwNjh9.xlVAhk2f-I8US1xuY9Sw3c-ewMa4QkANACn3HhcsyeQ
+
+
+### file reader
+GET http://localhost:8090/api/v1/file/b9f73102-0ba6-4adf-9208-2f4e2e3693c4
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjYzI5OThmNi1hNjdjLTRlNjItYzhhMjA4ODUtMGRkMS00NGE1LWI2OWItODQ2YWZmMDcyMjY4LWEzYzAtOGQ0NjM5Mjc5YzgwIiwiaWF0IjoxNzA5ODE1MTExLCJleHAiOjE3MTcwMTUxMTF9.z2SNKUGLJbhfbmar3ie3VVLvrBnuK26FTL-C_BqoMis

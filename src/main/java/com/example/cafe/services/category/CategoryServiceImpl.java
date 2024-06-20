@@ -79,7 +79,7 @@ public class CategoryServiceImpl implements CategoryService{
         Category category = categoryRepository.findByNameIgnoreCase(parentName)
                 .orElse(null);
 
-        List<Category> categories = categoryRepository.findAllByParent(category);
+        List<Category> categories = categoryRepository.findAllByParentAndStatus(category, UniStatusEnum.ACTIVE);
 
         return ApiResult.successResponse(CategoryDTO.map(categories));
     }

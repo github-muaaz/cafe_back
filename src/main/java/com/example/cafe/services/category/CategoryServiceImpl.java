@@ -1,13 +1,11 @@
 package com.example.cafe.services.category;
 
 import com.example.cafe.entity.Category;
-import com.example.cafe.entity.Product;
 import com.example.cafe.entity.enums.UniStatusEnum;
 import com.example.cafe.exceptions.RestException;
 import com.example.cafe.payload.api.ApiResult;
 import com.example.cafe.payload.category.CategoryAddEditDTO;
 import com.example.cafe.payload.category.CategoryDTO;
-import com.example.cafe.payload.product.ProductDTO;
 import com.example.cafe.repository.CategoryRepository;
 import com.example.cafe.utils.MessageConstants;
 import lombok.RequiredArgsConstructor;
@@ -76,6 +74,7 @@ public class CategoryServiceImpl implements CategoryService{
 
     @Override
     public ApiResult<List<CategoryDTO>> getAll(String parentName) {
+
         Category category = categoryRepository.findByNameIgnoreCase(parentName)
                 .orElse(null);
 

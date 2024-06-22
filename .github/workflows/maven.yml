@@ -27,6 +27,7 @@ jobs:
           name: java-app
           path: '${{ github.workspace }}/target/*.jar'
 
+
       - name: Execute Jar File
         run: |
           sudo kill -9 $(sudo lsof -t -i:8090) || true

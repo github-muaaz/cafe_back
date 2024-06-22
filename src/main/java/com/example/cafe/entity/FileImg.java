@@ -6,7 +6,6 @@ import org.hibernate.annotations.SQLDelete;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Lob;
 
 @Entity
 @Setter
@@ -22,8 +21,4 @@ public class FileImg extends AbsUUIDEntity {
 
     @Column(nullable = false, unique = true, columnDefinition = "text")
     private String name;
-
-    @Lob
-    @Column(nullable = false)
-    private byte[] content;
 }

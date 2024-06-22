@@ -11,9 +11,9 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry
                 .addMapping("/**")
-                .allowedOriginPatterns("*") // Allow all origins (you can specify specific origins if needed)
-                .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH") // Allowed HTTP methods
-                .allowedHeaders("*") // Allowed headers (you can restrict this based on your needs)
-                .allowCredentials(true); // Allow credentials (e.g., cookies, authentication headers)
+                .allowedOriginPatterns("https://cafe-menu-pied.vercel.app") // Use the specific origin
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH")
+                .allowedHeaders("*")
+                .allowCredentials(true);
     }
 }

@@ -13,6 +13,7 @@ public interface RestConstants {
     String AUTHENTICATION_HEADER = "Authorization";
 
     String UPLOAD_FILE = "/home/ubuntu/files/img";
+//    String UPLOAD_FILE = "src/main/resources/files/img";
 
     String REFRESH_TOKEN_HEADER = "RefreshToken";
 

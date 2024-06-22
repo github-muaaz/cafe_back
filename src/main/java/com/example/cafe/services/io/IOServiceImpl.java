@@ -6,57 +6,41 @@ import com.example.cafe.exceptions.RestException;
 import com.example.cafe.repository.FileRepository;
 import com.example.cafe.utils.RestConstants;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StreamUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
-public class IOServiceImpl implements IOService{
-
-    private static final int BUFFER_SIZE = 4096;
+public class IOServiceImpl implements IOService {
 
     private final FileRepository fileRepository;
 
     private static final String UPLOAD_DIRECTORY = RestConstants.UPLOAD_FILE;
 
-    public IOServiceImpl(FileRepository fileRepository) throws IOException {
-
+    public IOServiceImpl(FileRepository fileRepository) {
         this.fileRepository = fileRepository;
-
-        Path path = Paths.get(UPLOAD_DIRECTORY).toAbsolutePath().normalize();
-
-        Files.createDirectories(path);
     }
 
     @Override
     public FileImg upload(MultipartFile originalFile) {
         try {
             if (originalFile.isEmpty())
-                throw RestException
-                        .restThrow("No file chosen", HttpStatus.BAD_REQUEST);
+                throw RestException.restThrow("No file chosen", HttpStatus.BAD_REQUEST);
 
             Date date = new Date();
-
-            Path path = Paths.get(UPLOAD_DIRECTORY, date.getTime() + "-" + originalFile.getOriginalFilename());
-
-            Files.write(path, originalFile.getBytes());
+            byte[] content = originalFile.getBytes();
 
             FileImg file = new FileImg();
-            file.setName("image-" + date.getTime() + originalFile.getName());
-            file.setPath(path.toString());
+            file.setName("image-" + date.getTime() + originalFile.getOriginalFilename());
+            file.setPath(UPLOAD_DIRECTORY);
+            file.setContent(content);
 
             return fileRepository.save(file);
         } catch (IOException e) {
@@ -67,8 +51,7 @@ public class IOServiceImpl implements IOService{
 
     @Override
     public List<FileImg> upload(List<MultipartFile> files) {
-        return files
-                .stream()
+        return files.stream()
                 .map(this::upload)
                 .collect(Collectors.toList());
     }
@@ -76,10 +59,8 @@ public class IOServiceImpl implements IOService{
     @Override
     public void delete(FileImg file) {
         try {
-            Files.deleteIfExists(Path.of(file.getPath()));
-
-            fileRepository.deleteById(file.getId());
-        } catch (IOException e) {
+            fileRepository.delete(file);
+        } catch (Exception e) {
             e.printStackTrace();
             throw new RestException("COULD NOT DELETE FILE", HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -87,13 +68,9 @@ public class IOServiceImpl implements IOService{
 
     @Override
     public void delete(List<FileImg> files) {
-        List<UUID> ids = files.stream().map(AbsUUIDEntity::getId).collect(Collectors.toList());
         try {
-            for (FileImg file : files)
-                Files.deleteIfExists(Path.of(file.getPath()));
-
-            fileRepository.deleteAllById(ids);
-        } catch (IOException e) {
+            fileRepository.deleteInBatch(files);
+        } catch (Exception e) {
             e.printStackTrace();
             throw new RestException("COULD NOT DELETE FILE", HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -101,19 +78,14 @@ public class IOServiceImpl implements IOService{
 
     @Override
     public void serveImage(UUID id, HttpServletResponse response) throws IOException {
-
         FileImg file = fileRepository.findById(id)
                 .orElseThrow(() ->
-                        RestException
-                                .restThrow("FILE NOT FOUND", HttpStatus.NOT_FOUND)
-                );
+                        RestException.restThrow("FILE NOT FOUND", HttpStatus.NOT_FOUND));
 
-        String filePath = file.getPath();
+        response.setContentType("application/octet-stream");
+        response.setContentLengthLong(file.getContent().length);
+        response.setHeader("Content-Disposition", "inline; filename=\"" + file.getName() + "\"");
 
-        InputStream resource = new FileInputStream(filePath);
-
-        response.setContentType(MediaType.ALL_VALUE);
-
-        StreamUtils.copy(resource, response.getOutputStream());
+        StreamUtils.copy(file.getContent(), response.getOutputStream());
     }
 }
